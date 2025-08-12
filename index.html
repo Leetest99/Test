@@ -1,24 +1,1603 @@
+
+<?php include 'inc/header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
-            color: #333;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biztory Full Width Layout</title>
+  <style>
+    /* ===== RESET & BASE STYLES ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Roboto', Arial, sans-serif; 
+      overflow-x: hidden;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* ===== HERO SECTION ===== */
+    .hero-slider {
+      position: relative;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, #2a3f8f 0%, #5a2f8f 100%);
+      padding: 60px 0 0;
+    }
+    
+    /* Asset 4-1 Container - Now full width */
+    .asset-4-container {
+      position: relative;
+      width: 100vw; /* Full viewport width */
+      height: 80vh;
+      max-height: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Asset 4-1 Background - Stretched horizontally */
+    .asset-4-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/03/26154645/Asset-4-1.png');
+      background-size: 100% auto; /* Stretch width 100%, maintain aspect ratio */
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      z-index: 1;
+    }
+    
+    /* Asset 3 Wave - Full width and centered */
+    .asset-3-wave {
+      position: absolute;
+      width: 100%; /* Full width of container */
+      height: 50vh;
+      left: 0;
+      right: 0;
+      bottom: 15%;
+      background: url('https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/03/26154703/Asset-3.png');
+      background-size: auto 100%; /* Stretch to fill */
+      background-repeat:  no repeat;
+	  background-position: 0% center; /* Start position */
+      animation: waveMove 20s linear infinite;
+      z-index: 1;
+	  
+  
+    }
+    
+   @keyframes waveMove {
+  0% {
+    transform: translateX(0%); /* Start with left portion visible */
+    background-position: left center;
+  }
+  50% {
+    transform: translateX(0%); /* Move right to show right portion */
+    background-position: right center;
+  }
+  100% {
+    transform: translateX(0%); /* Return to left position */
+    background-position: left center;
+  }
+}
+
+    
+    /* Shayna Image (unchanged) */
+    .shayna-image {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      height: 100%;
+      max-height: 600px;
+      object-fit: contain;
+      object-position: bottom;
+      z-index: 3;
+    }
+    
+    /* Content (unchanged) */
+    .hero-content {
+      position: absolute;
+      right: 40%;
+      top: 60%;
+      transform: translateY(-50%);
+      width: 45%;
+      color: white;
+      z-index: 4;
+    }
+    
+    .hero-content h1 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+      line-height: 1.3;
+	  color: white;
+    }
+    
+    .tour-link {
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      margin: 20px 0;
+      font-size: clamp(14px, 1.5vw, 18px);
+    }
+    
+    .tour-link i {
+      margin-left: 8px;
+    }
+    
+    /* Buttons (unchanged) */
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 12px 25px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: clamp(14px, 1.3vw, 16px);
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: #ed3968;
+      color: white;
+      border: 1px solid #ed3968;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+    
+    /* Badges (unchanged) */
+    .badges {
+      position: absolute;
+      bottom: 10%;
+      right: 70%;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 5;
+    }
+    
+    .badges p {
+      color: white;
+      font-size: clamp(12px, 1.2vw, 16px);
+    }
+    
+    .badge-img {
+      height: clamp(20px, 2.5vw, 28px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .hero-content {
+        width: 50%;
+      }
+      
+      .shayna-image {
+        height: 60%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .asset-4-container {
+        height: 70vh;
+      }
+      
+      .hero-content {
+        width: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+      
+      .shayna-image {
+        position: relative;
+        right: auto;
+        height: auto;
+        width: 70%;
+        max-height: none;
+        margin: 30px auto 0;
+        display: block;
+      }
+      
+      .badges {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        justify-content: center;
+        margin: 20px 0;
+      }
+      
+      .asset-3-wave {
+        height: 20%;
+        bottom: 30%;
+      }
+    }
+
+/* Main Slider Container */
+.biztory-auto-slider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+/* Slider Content Area */
+.slider-container {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+  height: 400px;
+}
+
+/* Individual Slides */
+.slide {
+  min-width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.slide-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+}
+
+/* Text Content Styling */
+.text-content {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+}
+
+.text-content h2 {
+  font-size: 28px;
+  color: #673694;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.text-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Image Content Styling */
+.image-content {
+  flex: 1;
+  min-width: 300px;
+  text-align: center;
+  padding: 20px;
+}
+
+.image-content img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* Learn More Button */
+.learn-more-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  background: #ed3968;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.learn-more-btn:hover {
+  background: #c52b55;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+
+.learn-more-btn:hover .btn-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .slider-container {
+    height: auto;
+  }
+  
+  .slide {
+    padding: 20px;
+    flex-direction: column;
+  }
+  
+  .slide-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .text-content, .image-content {
+    min-width: 100%;
+    text-align: center;
+  }
+  
+  .text-content h2 {
+    font-size: 22px;
+  }
+  
+  .learn-more-btn {
+    margin: 0 auto;
+  }
+}
+
+body, html, .custom-slider, .slide, .slide-content, .slider-container {
+  background-color: #fff !important;
+}
+
+/* Client Logos Grid */
+	.client-logos {
+  background: #6a0dad;
+  padding: 60px 20px 40px; /* Added more top padding (60px) */
+  text-align: center;
+  margin-top: 40px; /* Pushes the entire section down */
+}
+
+.client-logos-title {
+  margin-bottom: 40px; /* More space below title */
+  font-size: 28px;
+  color: white;
+}
+
+.client-logos-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px; /* Increased gap between logos (from 30px to 50px) */
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 15px 0; /* Slightly more padding around logos */
+}
+
+.client-logos-grid img {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0; /* Prevents logos from shrinking if space is tight */
+}object-fit: contain; /* Prevents stretching */
+}
+
+	/* Layout Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    overflow-x: hidden;
+}
+
+.biztory-container {
+    max-width: 1200px;
+    margin: 100px auto 40px; /* Moved whole section down */
+    padding: 0 20px;
+}
+
+.biztory-content {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 60px;
+    align-items: flex-start;
+}
+
+/* IMAGE POSITION - Change 'left' to 'right' to swap sides */
+.image-section {
+    flex: 1;
+    margin-top: 40px;
+    order: 1; /* Default left position */
+}
+
+.text-features {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    order: 2;
+}
+
+.biztory-content {
+    display: flex;
+    flex-direction: column; /* Keep this */
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.header-and-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-row {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.biztory-header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 40px; /* Restore margin */
+}
+
+.biztory-header h1 {
+    display: block; /* Changed from inline-block */
+    font-size: 2.5rem;
+    color: #6a0dad;
+    font-weight: 700;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+}
+
+.feature {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.feature h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.feature p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.biztory-description {
+    max-width: 800px;
+    margin: 60px auto 0;
+    text-align: left;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    padding: 30px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+/* Animation Styles */
+.animate-on-scroll {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Image specific fade animation */
+.image-fade {
+    transform: translateX(-30px); /* Change to positive value for right-to-left */
+}
+
+.text-features .animate-on-scroll {
+    transform: translateY(30px);
+}
+
+.animate-on-scroll.animated {
+    opacity: 1;
+    transform: translate(0, 0) !important;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .biztory-container {
+        margin-top: 60px;
+    }
+    
+    .biztory-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .image-section {
+        order: 2; /* Image below text on mobile */
+        margin-top: 0;
+        text-align: center;
+    }
+    
+    .text-features {
+        order: 1;
+    }
+    
+    .biztory-header h1 {
+        font-size: 2rem;
+    }
+    
+    .biztory-description {
+        margin-top: 40px;
+        padding: 20px;
+    }
+}
+
+
+/* Fullscreen GIF Section Styles */
+.fullscreen-gif-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents scrollbars */
+}
+
+.fullscreen-gif {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+/* Reset body margin to prevent white space */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+/* For maintaining aspect ratio */
+@media (max-aspect-ratio: 16/9) {
+    .responsive-gif {
+        width: auto;
+        height: 100%;
+    }
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .responsive-gif {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* CTA Section Styles */
+.cta-section {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.cta-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.cta-heading h2 {
+    color: #6a0dad;
+    font-size: 2.2rem;
+    line-height: 1.4;
+    margin-bottom: 50px;
+    font-weight: 700;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+}
+
+/* Button Styles */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ed3968;
+    color: white;
+    border: 2px solid #ed3968;
+    border-radius: 6px;
+    padding: 16px 40px;
+    font-size: 1.1rem;
+    font-weight: 700; /* Bold text */
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    min-width: 180px;
+}
+
+.button-text {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block;
+    font-weight: 700; /* Bold text */
+}
+
+.button-arrow {
+    position: absolute;
+    right: 15px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-weight: 700; /* Bold arrow */
+}
+
+/* Hover Effects */
+.cta-button:hover {
+    background-color: white;
+    color: #ed3968;
+    padding-right: 50px;
+}
+
+.cta-button:hover .button-text {
+    transform: translateX(-10px);
+}
+
+.cta-button:hover .button-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .cta-section {
+        padding: 60px 20px;
+    }
+    
+    .cta-heading h2 {
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .cta-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Counting from the World */
+.et_pb_section_7 {
+        padding: 80px 0;
+        background-color: #f8f9fa;
+        position: relative;
+    }
+    
+    .et_pb_row_13 {
+        display: flex;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        justify-content: center;
+    }
+    
+    .et_pb_column {
+        flex: 1;
+        padding: 0 15px;
+    }
+    
+    .counter-box {
+        background-color: rgba(231, 76, 60, 0.8);
+        padding: 40px 20px;
+        border-radius: 4px;
+        color: white;
+        text-align: center;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+	.counter-box.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+    
+    .et_pb_with_border {
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .percent {
+        margin-bottom: 15px;
+    }
+    
+    .percent-value {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1;
+    }
+    
+    .title {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+    }
+    
+    /* Animation classes */
+    .active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    @media (max-width: 980px) {
+        .et_pb_row_13 {
+            flex-wrap: wrap;
         }
-        h1 {
-            color: #4CAF50;
+        
+        .et_pb_column {
+            flex: 0 0 50%;
+            max-width: 50%;
+            margin-bottom: 30px;
         }
-    </style>
+        
+        .et_pb_column:last-child {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .et_pb_column {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+	/* Arrow hover effect */
+    .et_pb_button_6 .button-arrow {
+        display: inline-block;
+        margin-left: 5px;
+        transform: translateX(-5px);
+        opacity: 0;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .et_pb_button_6:hover .button-arrow {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+	/* Arrow hover effect for both buttons */
+    .et_pb_button_7 .button-arrow,
+    .et_pb_button_8 .button-arrow {
+        display: inline-block;
+        margin-left: 5px;
+        transform: translateX(-5px);
+        opacity: 0;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    
+    .et_pb_button_7:hover .button-arrow,
+    .et_pb_button_8:hover .button-arrow {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+	
+</style>
+  </style>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>This is my first deployed website. If you see this, it works!</p>
-    <p>Current date: August 11, 2025. Testing if everything loads correctly.</p>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-slider">
+  <div class="asset-4-container">
+    <!-- Asset 4-1 Background -->
+    <div class="asset-4-bg"></div>
+    
+    <!-- Asset 3 Wave -->
+    <div class="asset-3-wave"></div>
+    
+    <!-- Shayna Image -->
+    <img src="https://biztory-wordpress-img.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2022/12/20134628/shayna-main-page.png" 
+         alt="Biztory Software" class="shayna-image">
+    
+    <!-- Content -->
+    <div class="hero-content">
+      <h1>Cloud Accounting Software for Malaysian SMEs</h1>
+      
+      <a href="https://youtu.be/R2zSUzCpKxg" class="tour-link" target="_blank">
+        90sec Tour to know about Biztory <i class="fas fa-play"></i>
+      </a>
+      
+      <div class="hero-buttons">
+        <a href="https://3.1.151.53/register" class="btn btn-primary">14 Days Free Trial</a>
+        <a href="https://display.biztory.com.my" class="btn btn-outline">View Demo</a>
+      </div>
+    </div>
+    
+    <!-- Badges -->
+    <div class="badges">
+      <p>Recognized By:</p>
+      <img src="https://biztory.com.my/wp-content/uploads/2025/06/2-ISO.png" alt="ISO Certified" class="badge-img">
+      <img src="https://biztory.com.my/wp-content/uploads/2025/06/2-md1.png" alt="MDEC Certified" class="badge-img">
+    </div>
+  </div>
+</section>
+
 </body>
+
+
+
+<!-- Hero Slider Section -->
+<section class="biztory-auto-slider">
+  <div class="slider-container">
+    <!-- Slide 1: Data Security -->
+    <div class="slide active">
+      <div class="slide-content">
+        <div class="image-content">
+          <img src="//biztory.com.my/wp-content/uploads/2025/06/1-ISOHomepage.png" alt="ISO Security Certification">
+        </div>
+        <div class="text-content">
+          <h2>Your business data is safe with Biztory</h2>
+          <p>Fully secured under ISO/IEC 27001:2022 international standards. Trust us as your reliable partner to protect your customer and financial data with world-class security.</p>
+          <a href="index.php" class="learn-more-btn">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: E-Invoicing -->
+    <div class="slide">
+      <div class="slide-content">
+        <div class="image-content">
+          <img src="//biztory.com.my/wp-content/uploads/2024/08/image-20240807-083812.png" alt="E-Invoice Solution">
+        </div>
+        <div class="text-content">
+          <h2>Biztory Cloud Accounting: LHDN-Compliant Partner E-Invoice Made Easy!</h2>
+          <p>Biztory's cloud accounting software simplifies your e-Invoicing with automatic LHDN-compliant submissions. Forget tedious manual entries in the MyInvois portal.</p>
+          <a href="e-invoice_biztory.php" class="learn-more-btn">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</section>
+
+<!-- Slider Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.slider-container');
+  const slides = document.querySelectorAll('.slide');
+  let currentIndex = 0;
+  const slideDuration = 5000; // 5 seconds per slide
+  let slideInterval;
+
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  function startAutoSlide() {
+    slideInterval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlider();
+    }, slideDuration);
+  }
+
+  // Pause on hover for better UX
+  slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+  slider.addEventListener('mouseleave', startAutoSlide);
+
+  // Initialize
+  updateSlider();
+  startAutoSlide();
+});
+</script>
+
+<section class="client-logos">
+  <h2 class="client-logos-title">Embracing Productive Invoicing & Accounting Systems Like Them</h2>
+  <div class="client-logos-grid">
+    <img src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/28124845/rtist.png" alt="RTIST">
+    <img src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/28124844/bigit.png" alt="Bigit">
+    <img src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/28124844/wofollow.png" alt="Wofollow">
+    <img src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/28124843/r20.png" alt="R20">
+    <img src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/28124843/fulry.png" alt="Fulry">
+  </div>
+</section>
+
+
+<section class="biztory-container">
+    <div class="biztory-content">
+        <div class="header-and-content">
+            <div class="biztory-header">
+                <h1>Why Biztory Cloud Accounting Software?</h1>
+            </div>
+            
+            <div class="content-row">
+                <div class="image-section animate-on-scroll image-fade">
+                    <img src="https://biztory.com.my/wp-content/uploads/2023/08/Desktop_biztory.png" 
+                         alt="Biztory Cloud Accounting Software" class="biztory-image">
+                </div>
+                
+                <div class="text-features">
+                    <div class="feature animate-on-scroll">
+                        <h2 class="biz-header">Accessible</h2>
+                        <p>Our software is designed to handle your daily accounting with flexibility whenever, wherever you are.</p>
+                    </div>
+                    
+                    <div class="feature animate-on-scroll">
+                        <h2 class="biz-header">Accountable</h2>
+                        <p>An accounting system that recognized by accountants and fully backed by 128-bit SSL data security.</p>
+                    </div>
+                    
+                    <div class="feature animate-on-scroll">
+                        <h2 class="biz-header">Affordable</h2>
+                        <p>Now everyone can afford. As low as RM390/year, get efficiency with Biztory today! <span class="normal-text">Compare between the pricing plans of our </span><strong>cloud accounting software in Malaysia</strong> <span class="normal-text">to see which </span><a href="https://biztory.com.my/pricing-2023-2/"><span class="normal-text">accounting system price</span></a><span class="normal-text"> suits you best.</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="biztory-description animate-on-scroll">
+            <p><strong>Biztory cloud based accounting software</strong> makes your daily accounting tasks simpler and faster. Go paperless with Biztory <strong>accounting cloud</strong> and its tools for corporates, SMEs and businesses today. Your accountants and bookkeepers no longer need to keep piles of papers and perform cross checking manually.</p>
+            <p>We are confident that we will be able to optimize your business cost while securing your data storage.</p>
+            <p>Check out the full features of our <a href="https://biztory.com.my/full-set-accounting-2/">SME accounting software</a> today. We're able to help you with your <a href="https://biztory.com.my/accounting-services-2/">accounting services</a>, such as keeping track and managing <a href="https://biztory.com.my/full-set-accounting-2/generate-invoice/">sales and invoice</a>, <a href="https://biztory.com.my/full-set-accounting-2/manage-cashflow/">accounting cashflow</a>, <a href="https://biztory.com.my/full-set-accounting-2/manage-inventory/">purchases and inventory</a>, as well as <a href="https://biztory.com.my/full-set-accounting-2/generate-financial-report/">accounting and taxes</a>.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for fonts and images to load before animating
+    window.addEventListener('load', function() {
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        // Enhanced observer configuration with multiple thresholds
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Only trigger when element is sufficiently visible
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: [0, 0.1, 0.2, 0.3], // Multiple trigger points
+            rootMargin: '0px 0px -20% 0px' // 20% from bottom
+        });
+
+        // Stagger observations for better performance
+        animateElements.forEach((element, index) => {
+            setTimeout(() => {
+                observer.observe(element);
+            }, index * 100); // 100ms delay between each observation
+        });
+
+        // Enhanced image hover effects (for both old and new image classes)
+        const images = document.querySelectorAll('.responsive-image, .biztory-image');
+        images.forEach(image => {
+            const imageWrapper = image.parentElement;
+            
+            // Ensure wrapper has proper styles
+            imageWrapper.style.overflow = 'hidden';
+            imageWrapper.style.transition = 'transform 0.3s ease';
+            
+            // Add smooth hover effect
+            image.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            imageWrapper.addEventListener('mouseenter', () => {
+                image.style.transform = 'scale(1.05)';
+            });
+            
+            imageWrapper.addEventListener('mouseleave', () => {
+                image.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add smooth scroll behavior for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Performance optimization - reduce jank
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', function() {
+            const currentScrollY = window.scrollY;
+            if (Math.abs(currentScrollY - lastScrollY) > 50) {
+                lastScrollY = currentScrollY;
+                // Throttle heavy operations
+            }
+        }, { passive: true });
+    });
+
+    // Fallback for browsers that don't support IntersectionObserver
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            el.classList.add('animated');
+        });
+    }
+});
+</script>
+
+<!-- Full-screen GIF Section -->
+<section class="fullscreen-gif-section">
+    <img decoding="async" 
+         src="//s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/18123413/finalEN.gif" 
+         alt="Biztory Animation" 
+         class="fullscreen-gif">
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-container">
+        <div class="cta-heading">
+            <h2>Let's Experience The Seamless Accounting Journey with Biztory's Full Set Accounting within Free Trial 14 Days.</h2>
+        </div>
+        
+        <div class="cta-buttons">
+            <a href="https://biztory.com.my/register" class="cta-button">
+                <span class="button-text">Get Started</span>
+                <span class="button-arrow">&gt;</span>
+            </a>
+            <a href="https://biztory.com.my/full-set-accounting/" class="cta-button">
+                <span class="button-text">More Features</span>
+                <span class="button-arrow">&gt;</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="et_pb_section et_pb_section_7 pa-hide-background-image-mobile et_pb_with_background et_section_regular" 
+         style="position: relative; z-index: 0; background-image: url(https://biztory.com.my/wp-content/uploads/2020/05/animated-map.gif), linear-gradient(45deg, #8300e9 0%, #ed3968 100%) !important;">
+    <div class="et_pb_row et_pb_row_13" style="position: relative; z-index: 1;">
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_22 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_number_counter et_pb_number_counter_0 counter-box et_pb_text_align_center et_pb_bg_layout_dark et_pb_with_title active" data-number-value="13000" data-number-separator=",">
+                <div class="percent"><p><span class="percent-value">13,000</span><span class="percent-sign"></span></p></div>
+                <h3 class="title">Registered Companies</h3>
+                <canvas height="0" width="0" style="height: 0px; width: 0px;"></canvas>
+            </div>
+        </div>
+        
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_23 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_number_counter et_pb_number_counter_1 counter-box et_pb_text_align_center et_pb_bg_layout_dark et_pb_with_title active" data-number-value="60" data-number-separator="">
+                <div class="percent"><p><span class="percent-value">60</span><span class="percent-sign"></span></p></div>
+                <h3 class="title">Cities in Malaysia</h3>
+                <canvas height="0" width="0" style="height: 0px; width: 0px;"></canvas>
+            </div>
+        </div>
+        
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_24 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_with_border et_pb_module et_pb_number_counter et_pb_number_counter_2 counter-box et_pb_text_align_center et_pb_bg_layout_dark et_pb_with_title active" data-number-value="9.8" data-number-separator="">
+                <div class="percent"><p><span class="percent-value">9.8</span><span class="percent-sign"></span></p></div>
+                <h3 class="title">Review Rating</h3>
+                <canvas height="0" width="0" style="height: 0px; width: 0px;"></canvas>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const counterBoxes = document.querySelectorAll('.counter-box');
+        let animationTriggered = false;
+        
+        function animateValue(element, start, end, duration, hasComma, isDecimal) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                
+                let value;
+                if (isDecimal) {
+                    value = (start + (end - start) * progress).toFixed(1);
+                } else {
+                    value = Math.floor(start + (end - start) * progress);
+                    if (hasComma) {
+                        value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                }
+                
+                element.textContent = value;
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        function checkScroll() {
+            const triggerBottom = window.innerHeight / 5 * 4;
+            
+            counterBoxes.forEach(box => {
+                const boxTop = box.getBoundingClientRect().top;
+                
+                if (boxTop < triggerBottom) {
+                    box.classList.add('active');
+                    
+                    if (!box.hasAttribute('data-animated')) {
+                        box.setAttribute('data-animated', 'true');
+                        
+                        const valueElement = box.querySelector('.percent-value');
+                        const targetValue = box.getAttribute('data-number-value');
+                        const hasComma = box.getAttribute('data-number-separator') === ',';
+                        const isDecimal = targetValue.includes('.');
+                        
+                        animateValue(
+                            valueElement,
+                            0,
+                            parseFloat(targetValue.replace(/,/g, '')),
+                            2000,
+                            hasComma,
+                            isDecimal
+                        );
+                    }
+                }
+            });
+        }
+        
+        // Initial check
+        checkScroll();
+        
+        // Check on scroll
+        window.addEventListener('scroll', checkScroll);
+    });
+</script>
+
+<section class="et_pb_section et_pb_section_9 et_pb_with_background et_section_regular">
+    <div class="et_pb_row et_pb_row_14">
+        <div class="et_pb_column et_pb_column_4_4 et_pb_column_25 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_text et_pb_text_9 et_pb_text_align_left et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <h2 style="text-align: center;"><strong>What People Are Saying?</strong></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+	<section class="et_pb_section et_pb_section_10 et_pb_with_background et_section_regular et_pb_section_sticky et_pb_section_sticky_mobile">
+    <div class="et_pb_row et_pb_row_15 et_pb_gutters1 et-last-child">
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_26 et_pb_css_mix_blend_mode_passthrough et_pb_row_sticky">
+            <div class="et_pb_module et_pb_image et_pb_image_9 et_pb_image_sticky">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/10162059/philiploo.png" alt="" title="">
+                </span>
+            </div>
+        </div>
+        
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_27 et_pb_css_mix_blend_mode_passthrough et_pb_row_sticky">
+            <div class="et_pb_module et_pb_image et_pb_image_10 et_pb_image_sticky">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/10162041/chualiyee.png" alt="" title="">
+                </span>
+            </div>
+        </div>
+        
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_28 et_pb_css_mix_blend_mode_passthrough et-last-child et_pb_row_sticky">
+            <div class="et_pb_module et_pb_image et_pb_image_11 et_pb_image_sticky">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/10162057/domaiselew.png" alt="" title="">
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+	<section class="et_pb_section et_pb_section_11 et_pb_with_background et_section_regular">
+    <div class="et_pb_row et_pb_row_16 et_pb_gutters2 et_pb_row_4col">
+        <!-- First Video Column -->
+        <div class="et_pb_column et_pb_column_1_4 et_pb_column_29 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_video et_pb_video_0 home-video">
+                <div class="et_pb_video_box">
+                    <div class="fluid-width-video-wrapper" style="padding-top: 56.2963%;">
+                        <iframe loading="lazy" title="Double A Food Supplier" src="https://www.youtube.com/embed/duBqJfvautc?feature=oembed" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="et_pb_module et_pb_text et_pb_text_10 home-videotext et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">Double A Food Supplier</div>
+            </div>
+        </div>
+
+        <!-- Second Video Column -->
+        <div class="et_pb_column et_pb_column_1_4 et_pb_column_30 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_video et_pb_video_1 home-video">
+                <div class="et_pb_video_box">
+                    <div class="fluid-width-video-wrapper" style="padding-top: 56.2963%;">
+                        <iframe loading="lazy" title="Retail to Online Marketing" src="https://www.youtube.com/embed/Fzs6R-HbGII?feature=oembed" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="et_pb_module et_pb_text et_pb_text_11 home-videotext et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">Retail 2 Online Marketing</div>
+            </div>
+        </div>
+
+        <!-- Third Video Column -->
+        <div class="et_pb_column et_pb_column_1_4 et_pb_column_31 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_video et_pb_video_2 home-video">
+                <div class="et_pb_video_box">
+                    <div class="fluid-width-video-wrapper" style="padding-top: 56.2963%;">
+                        <iframe loading="lazy" title="Maverick E.D.U" src="https://www.youtube.com/embed/ZudUeYzga1c?feature=oembed" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="et_pb_module et_pb_text et_pb_text_12 home-videotext et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">Maverick E.D.U</div>
+            </div>
+        </div>
+
+        <!-- Fourth Video Column -->
+        <div class="et_pb_column et_pb_column_1_4 et_pb_column_32 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_video et_pb_video_3 home-video">
+                <div class="et_pb_video_box">
+                    <div class="fluid-width-video-wrapper" style="padding-top: 56.2963%;">
+                        <iframe loading="lazy" title="Rtist" src="https://www.youtube.com/embed/JnjyE7LQPcI?feature=oembed" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="et_pb_module et_pb_text et_pb_text_13 home-videotext et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">Rtist</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button Row -->
+    <div class="et_pb_row et_pb_row_17">
+        <div class="et_pb_column et_pb_column_4_4 et_pb_column_33 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_button_module_wrapper et_pb_button_6_wrapper et_pb_button_alignment_center et_pb_module">
+                <a class="et_pb_button et_pb_button_6 et_pb_bg_layout_light" href="https://biztory.com.my/testimonials/">
+                    See More Customer's Story
+                    <span class="button-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+			<section class="et_pb_section et_pb_section_12 et_pb_with_background et_section_regular">
+    <div class="et_pb_row et_pb_row_18">
+        <div class="et_pb_column et_pb_column_4_4 et_pb_column_34 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_text et_pb_text_14 et_pb_text_align_left et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <h2 style="text-align: center;"><strong>Stay Connected with Our Integrations</strong></h2>
+                </div>
+            </div>
+            <div class="et_pb_module et_pb_text et_pb_text_15 et_pb_text_align_left et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <p style="text-align: center;">They'll streamline your business accounting – no matter where you work</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>				
+
+			<section class="et_pb_section et_pb_section_13 et_pb_with_background et_section_regular">
+    <!-- First Row - 3 Columns -->
+    <div class="et_pb_row et_pb_row_19 et_pb_gutters1">
+        <!-- First Column -->
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_35 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_12 et_pb_section_video_on_hover et_pb_image_sticky et_multi_view__hover_selector">
+                <a href="https://biztory.com.my/be-our-partner-2/">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/29111731/epos-1.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Second Column -->
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_36 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_13 et_pb_section_video_on_hover et_pb_image_sticky">
+                <a href="https://biztory.com.my/e-commerce/">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/29112449/ecommerce-2.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Third Column -->
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_37 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_image et_pb_image_14 et_pb_section_video_on_hover et_pb_image_sticky">
+                <a href="https://biztory.com.my/ipay88-payment-gateway/">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/07/29112451/ipay88-2.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row - 2 Columns -->
+    <div class="et_pb_row et_pb_row_20 et_pb_gutters2">
+        <!-- First Column -->
+        <div class="et_pb_column et_pb_column_1_2 et_pb_column_38 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_15 et_pb_section_video_on_hover et_pb_image_sticky">
+                <a href="https://biztory.com.my/hlb-biztory-cloud-accounting-solution/">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/11132837/Asset-6.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Second Column -->
+        <div class="et_pb_column et_pb_column_1_2 et_pb_column_39 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_image et_pb_image_16 et_pb_section_video_on_hover et_pb_image_sticky">
+                <a href="https://biztory.com.my/be-our-partner-2/">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/11132839/Asset-4.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Row - Heading -->
+    <div class="et_pb_row et_pb_row_21">
+        <div class="et_pb_column et_pb_column_4_4 et_pb_column_40 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_text et_pb_text_16 et_pb_text_align_left et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <h2 style="text-align: center;"><strong>As Featured On</strong></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fourth Row - 5 Columns (Featured Logos) -->
+    <div class="et_pb_row et_pb_row_22 et_pb_equal_columns et_pb_gutters2 et_pb_row_5col">
+        <!-- First Featured Column -->
+        <div class="et_pb_column et_pb_column_1_5 et_pb_column_41 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_17">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2021/09/21142053/star-online.png" alt="" title="">
+                </span>
+            </div>
+            <div class="et_pb_module et_pb_blurb et_pb_blurb_1 et_clickable et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_light">
+                <div class="et_pb_blurb_content">
+                    <div class="et_pb_blurb_container">
+                        <div class="et_pb_blurb_description">Giving a handle on numbers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Featured Column -->
+        <div class="et_pb_column et_pb_column_1_5 et_pb_column_42 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_18">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2021/09/21142017/Digital-News-Asia.png" alt="" title="">
+                </span>
+            </div>
+            <div class="et_pb_module et_pb_blurb et_pb_blurb_2 et_clickable et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_light">
+                <div class="et_pb_blurb_content">
+                    <div class="et_pb_blurb_container">
+                        <div class="et_pb_blurb_description">Malaysian startup out to help SMEs by 'humanizing' technology</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Featured Column -->
+        <div class="et_pb_column et_pb_column_1_5 et_pb_column_43 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_19">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/06/02185520/The-Edge-Markets.png" alt="" title="">
+                </span>
+            </div>
+            <div class="et_pb_module et_pb_blurb et_pb_blurb_3 et_clickable et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_light">
+                <div class="et_pb_blurb_content">
+                    <div class="et_pb_blurb_container">
+                        <div class="et_pb_blurb_description">Entrepreneurship: Automating accounting for small businesses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fourth Featured Column -->
+        <div class="et_pb_column et_pb_column_1_5 et_pb_column_44 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_20">
+                <span class="et_pb_image_wrap">
+                    <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/06/02185834/Oriental-Daily-1-2.png" alt="" title="">
+                </span>
+            </div>
+            <div class="et_pb_module et_pb_blurb et_pb_blurb_4 et_clickable et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_light">
+                <div class="et_pb_blurb_content">
+                    <div class="et_pb_blurb_container">
+                        <div class="et_pb_blurb_description">Biztory, one-stop solution in managing tax and invoicing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fifth Featured Column -->
+        <div class="et_pb_column et_pb_column_1_5 et_pb_column_45 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_image et_pb_image_21">
+                <a href="https://productnation.co/my/28283/best-accounting-software-malaysia/" target="_blank">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2021/09/21141209/pnchoice.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+            <div class="et_pb_module et_pb_text et_pb_text_17 et_clickable et_pb_text_align_left et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <p style="text-align: center;">Take Charge of Your Business's Finances with Accounting Software</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>				
+
+			<section class="et_pb_section et_pb_section_14 et_pb_with_background et_section_regular">
+    <!-- Awards Heading Row -->
+    <div class="et_pb_row et_pb_row_23">
+        <div class="et_pb_column et_pb_column_4_4 et_pb_column_46 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_text et_pb_text_18 et_pb_text_align_left et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <h2 style="text-align: center;"><strong>Awards</strong></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Awards Logos Row - 3 Columns -->
+    <div class="et_pb_row et_pb_row_24 awards-container et_pb_equal_columns">
+        <!-- First Award -->
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_47 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_22 et_pb_section_video_on_hover">
+                <a href="https://international.astroawani.com/business-news/axiata-digital-challenge-opportunity-malaysian-tech-startups-shine-160400" target="_blank">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2020/08/10160223/axiata_resized-1.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Second Award -->
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_48 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_image et_pb_image_23 et_pb_section_video_on_hover et_pb_image_sticky">
+                <a href="https://dreamcircle.media/biztory/" target="_blank">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2019/09/15173006/dream-factory.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Third Award -->
+        <div class="et_pb_column et_pb_column_1_3 et_pb_column_49 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_image et_pb_image_24 et_pb_section_video_on_hover et_pb_image_sticky">
+                <a href="https://www.cradle.com.my/" target="_blank">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2019/09/15173011/cradle-logo.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partners Row - 2 Columns -->
+    <div class="et_pb_row et_pb_row_25 et_pb_equal_columns">
+        <!-- HLB Partner -->
+        <div class="et_pb_column et_pb_column_1_2 et_pb_column_50 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_module et_pb_text et_pb_text_19 et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">Exclusive Accounting Software Vendor for</div>
+            </div>
+            <div class="et_pb_module et_pb_image et_pb_image_25 et_pb_section_video_on_hover">
+                <a href="https://www.hlb.com.my/en/business-banking/group-sme-banking/digital-business-solutions.html#section-digital-business-solutions-2">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2019/09/15172441/hlb_logo_long.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- iPay Partner -->
+        <div class="et_pb_column et_pb_column_1_2 et_pb_column_51 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_text et_pb_text_20 et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">Integrated proudly with</div>
+            </div>
+            <div class="et_pb_module et_pb_image et_pb_image_26 et_pb_section_video_on_hover">
+                <a href="https://biztory.com.my/be-our-partner-2/">
+                    <span class="et_pb_image_wrap">
+                        <img decoding="async" src="https://s3-ap-southeast-1.amazonaws.com/biztory-wordpress-img/wp-content/uploads/2019/09/15171101/ipay-easystore.png" alt="" title="">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+				
+			<section class="et_pb_section et_pb_section_15 et_pb_with_background et_section_regular">
+    <!-- Text Content Row -->
+    <div class="et_pb_row et_pb_row_26">
+        <div class="et_pb_column et_pb_column_4_4 et_pb_column_52 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_module et_pb_text et_pb_text_21 et_pb_text_align_center et_pb_bg_layout_light">
+                <div class="et_pb_text_inner">
+                    <div class="truncate">
+                        <h2>Join Thousands of SMEs Business Owners to Manage Your Business Accounting and Taxes.</h2>
+                        <p>Try now with free trial 14 days.</p>
+                        <p>Experience the seamless one-stop invoicing and accounting journey.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="et_pb_row et_pb_row_27">
+        <!-- Free Trial Button -->
+        <div class="et_pb_column et_pb_column_1_2 et_pb_column_53 et_pb_css_mix_blend_mode_passthrough">
+            <div class="et_pb_button_module_wrapper et_pb_button_7_wrapper et_pb_button_alignment_right et_pb_button_alignment_tablet_center et_pb_button_alignment_phone_center et_pb_module">
+                <a class="et_pb_button et_pb_button_7 signup et_pb_bg_layout_light" href="https://biztory.com.my/register">
+                    Start Free Trial
+                    <span class="button-arrow">></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- View Demo Button -->
+        <div class="et_pb_column et_pb_column_1_2 et_pb_column_54 et_pb_css_mix_blend_mode_passthrough et-last-child">
+            <div class="et_pb_button_module_wrapper et_pb_button_8_wrapper et_pb_button_alignment_tablet_center et_pb_module">
+                <a class="et_pb_button et_pb_button_8 et_pb_bg_layout_light" href="https://display.biztory.com.my/" target="_blank">
+                    View Demo
+                    <span class="button-arrow">></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php include 'inc/footer.php'; ?>
+
 </html>
